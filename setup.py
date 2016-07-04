@@ -10,5 +10,5 @@ setup(name='PyFastCentroid',
       url='',
       package_dir={'pyfc':'src'},
       packages=['pyfc'],
-      ext_modules=[Extension('pyfc.cntrf', ['src/cntr.f90'], libraries=['gomp','m'])]
+      ext_modules=[Extension('pyfc.gaussianf', ['src/gaussian.f90'], libraries=['gomp','m'])]
      )

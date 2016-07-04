@@ -18,7 +18,7 @@
 import numpy as np
 from scipy.optimize import fmin
 from numpy.random import multivariate_normal
-from cntrf import cntr
+from gaussianf import gaussian
 
 try:
     from emcee import EnsembleSampler
@@ -28,14 +28,14 @@ except ImportError:
 
 __all__ = ['psf_g1d', 'logl_g1d', 'centroid', 'gaussian1d', 'gaussian1dmt', 'gaussians1d']
 
-gaussian1d   = cntr.gaussian1d
-gaussian1dmt = cntr.gaussian1dmt
-gaussians1d  = cntr.gaussians1d
+gaussian1d   = gaussian.gaussian1d
+gaussian1dmt = gaussian.gaussian1dmt
+gaussians1d  = gaussian.gaussians1d
 
-logl_gaussian1d = cntr.logl_g1d
+logl_gaussian1d = gaussian.logl_g1d
 
-psf_g1d  = cntr.psf_g1d
-logl_g1d = cntr.logl_g1d
+psf_g1d  = gaussian.psf_g1d
+logl_g1d = gaussian.logl_g1d
 
 def centroid(img, x0, y0, fwhm_x=8., fwhm_y=8., verbose=False, **kwargs):
     def prior_bounds(pv):

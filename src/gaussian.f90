@@ -1,4 +1,4 @@
-module cntr
+module gaussian
   use omp_lib
   implicit none
   
@@ -119,4 +119,4 @@ contains
     call gaussian1d(center, amplitude, fwhm, npx, fmod)
     logl_g1d = -LLC*npx - 0.5d0*npx*log(error**2) -0.5d0*sum((fobs - (sky+fmod))**2/error**2)
   end function logl_g1d
-end module cntr
+end module gaussian
