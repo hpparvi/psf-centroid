@@ -1,16 +1,17 @@
 """Fast PSF modelling and centroiding in python
 
-   Calculates accurate one-dimensional undersampled PSFs 
+   Calculates an accurate one-dimensional undersampled Gaussian profile by
+   integrating the profile over each pixel analytically. 
 
    Contains
    --------
-     psf_g1d  - Calculates a Gaussian PSF using analytical integration
-     logl_g1d - Calculates the log likelihood assuming i.i.d normal errors
+     gaussian1d   - 1D Gaussian profile
+     gaussian1dmt - 1D Gaussian profile (multithreaded)
+     gaussians1d  - Multiple 1D Gaussian profiles
 
    Notes
    -----
-     - Currently implements only the Gaussian PSF
-     - The routines use the start of the first pixel as the origo. Use 
+     - The routines use the center of the first pixel as the origo. Use 
        an appropriate offset when calculating over a subarray. 
 
 """
@@ -25,12 +26,16 @@ try:
 except ImportError:
     with_emcee = False
 
-psf_g1d = cntr.psf_g1d
-logl_g1d = cntr.logl_g1d
+__all__ = ['psf_g1d', 'logl_g1d', 'centroid', 'gaussian1d', 'gaussian1dmt', 'gaussians1d']
 
-#psf_g1d.__doc__ = """1D Gaussian PSF using error function
-#Blah
-#"""
+gaussian1d   = cntr.gaussian1d
+gaussian1dmt = cntr.gaussian1dmt
+gaussians1d  = cntr.gaussians1d
+
+logl_gaussian1d = cntr.logl_g1d
+
+psf_g1d  = cntr.psf_g1d
+logl_g1d = cntr.logl_g1d
 
 def centroid(img, x0, y0, fwhm_x=8., fwhm_y=8., verbose=False, **kwargs):
     def prior_bounds(pv):
@@ -77,6 +82,3 @@ def centroid(img, x0, y0, fwhm_x=8., fwhm_y=8., verbose=False, **kwargs):
             pc[0,:], np.mean(np.abs(pc[1:,:]-pc[0,:]), axis=0), fc
         else:
             return pc[0,:], np.mean(np.abs(pc[1:,:]-pc[0,:]), axis=0)
-
-
-__all__ = ['psf_g1d', 'logl_g1d', 'centroid']
