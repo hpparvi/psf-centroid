@@ -32,7 +32,8 @@ gaussian1d   = gaussian.gaussian1d
 gaussian1dmt = gaussian.gaussian1dmt
 gaussians1d  = gaussian.gaussians1d
 
-logl_gaussian1d = gaussian.logl_g1d
+lnlike_gaussian1d  = gaussian.lnlike_gaussian1d
+lnlike_gaussians1d = gaussian.lnlike_gaussians1d
 
 psf_g1d  = gaussian.psf_g1d
 logl_g1d = gaussian.logl_g1d

@@ -1,3 +1,32 @@
+!!=== Gaussian profile module ===
+!!
+!! Routines to calculate an undersampled Gaussian profile (where sigma ~ 1 pixel)
+!! accurately by integrating the profile analytically over each pixel.
+!!
+!! -GPL-
+!!
+!! Copyright (C) 2013--2016  Hannu Parviainen
+!!
+!! This program is free software: you can redistribute it and/or modify
+!! it under the terms of the GNU General Public License as published by
+!! the Free Software Foundation, either version 3 of the License, or
+!! (at your option) any later version.
+!!
+!! This program is distributed in the hope that it will be useful,
+!! but WITHOUT ANY WARRANTY; without even the implied warranty of
+!! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!! GNU General Public License for more details.
+!!
+!! You should have received a copy of the GNU General Public License
+!! along with this program.  If not, see <http://www.gnu.org/licenses/>.
+!! -GPL-
+!!
+!! Author
+!!  Hannu Parviainen <hannu.parviainen@physics.ox.ac.uk>
+!!
+!! Date 
+!!  4.07.2016
+!!
 module gaussian
   use omp_lib
   implicit none
@@ -119,4 +148,25 @@ contains
     call gaussian1d(center, amplitude, fwhm, npx, fmod)
     logl_g1d = -LLC*npx - 0.5d0*npx*log(error**2) -0.5d0*sum((fobs - (sky+fmod))**2/error**2)
   end function logl_g1d
+
+  real(8) function lnlike_gaussian1d(center, amplitude, fwhm, error, sky, npx, fobs)
+    implicit none
+    integer, intent(in)  :: npx
+    real(8), intent(in)  :: center,amplitude,fwhm,error,sky,fobs(npx)
+    real(8) :: fmod(npx)
+
+    call gaussian1d(center, amplitude, fwhm, npx, fmod)
+    lnlike_gaussian1d = -LLC*npx - 0.5d0*npx*log(error**2) -0.5d0*sum((fobs - (sky+fmod))**2/error**2)
+  end function lnlike_gaussian1d
+
+  real(8) function lnlike_gaussians1d(centers, amplitudes, fwhm, error, sky, npx, nlines, fobs)
+    implicit none
+    integer, intent(in)  :: npx, nlines
+    real(8), intent(in)  :: centers(nlines), amplitudes(nlines), fwhm, error, sky, fobs(npx)
+    real(8) :: fmod(npx)
+
+    call gaussians1d(centers, amplitudes, fwhm, npx, nlines, fmod)
+    lnlike_gaussians1d = -LLC*npx - 0.5d0*npx*log(error**2) -0.5d0*sum((fobs - (sky+fmod))**2/error**2)
+  end function lnlike_gaussians1d
+
 end module gaussian
