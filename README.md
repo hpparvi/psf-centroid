@@ -1,11 +1,20 @@
-psf-centroid
-============
+# PyLineProfile
 
-Calculates an accurate one-dimensional undersampled Gaussian profile by
-integrating the profile over each pixel analytically.
+Calculation of accurate undersampled (FWHM ~ 1 pixel) 1D Gaussian and Lorentzian
+profiles. Useful in PSF fitting, etc. The profiles are calculated by integrating
+them analyticallly over each pixel, and the main parts of the code are written
+in Fortran for efficiency.
 
-That is, instead of evaluating
+## Requirements
+  - Fortran compiler
+  - NumPy
 
-\[
-f(a,c,fwhm) = \exp \left ( - \left (\frac{x-c}{s}\right )^2 \right )
-\]
+## Installation
+
+### From github
+
+    git clone https://github.com/hpparvi/psf-centroid.git PyFC
+    cd
+
+    python setup.py config_fc --fcompiler=gnu95 --opt="-Ofast" --f90flags="-fopenmp -march=native" build
+    python install --user
