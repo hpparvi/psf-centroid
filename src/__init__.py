@@ -19,6 +19,7 @@ import numpy as np
 from scipy.optimize import fmin
 from numpy.random import multivariate_normal
 from gaussianf import gaussian
+from lorentzianf import lorentzian
 
 try:
     from emcee import EnsembleSampler
@@ -26,11 +27,16 @@ try:
 except ImportError:
     with_emcee = False
 
-__all__ = ['psf_g1d', 'logl_g1d', 'centroid', 'gaussian1d', 'gaussian1dmt', 'gaussians1d']
+__all__ = ['psf_g1d', 'logl_g1d', 'centroid', 'gaussian1d', 'gaussian1dmt', 'gaussians1d',
+           'lorentzian1d', 'lorentzian1dmt', 'lorentzians1d']
 
-gaussian1d   = gaussian.gaussian1d
-gaussian1dmt = gaussian.gaussian1dmt
-gaussians1d  = gaussian.gaussians1d
+gaussian1d   = g1d   = gaussian.gaussian1d
+gaussian1dmt = g1dmt = gaussian.gaussian1dmt
+gaussians1d  = gs1d  = gaussian.gaussians1d
+
+lorentzian1d   = l1d   = lorentzian.lorentzian1d
+lorentzian1dmt = l1dmt = lorentzian.lorentzian1dmt
+lorentians1d   = ls1d  = lorentzian.lorentzians1d
 
 lnlike_gaussian1d  = gaussian.lnlike_gaussian1d
 lnlike_gaussians1d = gaussian.lnlike_gaussians1d
