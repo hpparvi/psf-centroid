@@ -18,8 +18,8 @@
 import numpy as np
 from scipy.optimize import fmin
 from numpy.random import multivariate_normal
-from gaussianf import gaussian
-from lorentzianf import lorentzian
+from .gaussianf import gaussian
+from .lorentzianf import lorentzian
 
 try:
     from emcee import EnsembleSampler
@@ -43,6 +43,8 @@ lnlike_gaussians1d = gaussian.lnlike_gaussians1d
 
 psf_g1d  = gaussian.psf_g1d
 logl_g1d = gaussian.logl_g1d
+
+lnlike_lorentzian1d = logl_l1d = lorentzian.lnlike_lorentzian1d
 
 def centroid(img, x0, y0, fwhm_x=8., fwhm_y=8., verbose=False, **kwargs):
     def prior_bounds(pv):

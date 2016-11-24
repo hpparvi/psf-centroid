@@ -125,17 +125,17 @@ contains
     end do
   end subroutine lorentzians1d
 
-!!$
-!!$  real(8) function lnlike_gaussian1d(center, amplitude, fwhm, error, sky, npx, fobs)
-!!$    implicit none
-!!$    integer, intent(in)  :: npx
-!!$    real(8), intent(in)  :: center,amplitude,fwhm,error,sky,fobs(npx)
-!!$    real(8) :: fmod(npx)
-!!$
-!!$    call gaussian1d(center, amplitude, fwhm, npx, fmod)
-!!$    lnlike_gaussian1d = -LLC*npx - 0.5d0*npx*log(error**2) -0.5d0*sum((fobs - (sky+fmod))**2/error**2)
-!!$  end function lnlike_gaussian1d
-!!$
+
+  real(8) function lnlike_lorentzian1d(center, amplitude, fwhm, error, sky, npx, fobs)
+    implicit none
+    integer, intent(in)  :: npx
+    real(8), intent(in)  :: center,amplitude,fwhm,error,sky,fobs(npx)
+    real(8) :: fmod(npx)
+
+    call lorentzian1d(center, amplitude, fwhm, npx, fmod)
+    lnlike_lorentzian1d = -LLC*npx - 0.5d0*npx*log(error**2) -0.5d0*sum((fobs - (sky+fmod))**2/error**2)
+  end function lnlike_lorentzian1d
+
 !!$  real(8) function lnlike_gaussians1d(centers, amplitudes, fwhm, error, sky, npx, nlines, fobs)
 !!$    implicit none
 !!$    integer, intent(in)  :: npx, nlines
